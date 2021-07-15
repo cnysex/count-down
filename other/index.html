@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>js实现酷炫倒计时动画效果</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+      .box {
+        width: 1000px;
+        height: 700px;
+        margin: 100px auto;
+      }
+      .btn {
+        width: 100px;
+        height: 100px;
+        margin: 50px auto 0;
+        font-size: 16px;
+        color: #fff;
+        text-align: center;
+        line-height: 100px;
+        border-radius: 100px;
+        background: #3385ff;
+      }
+      .btn:hover {
+        box-shadow: 0 0 10px #77aeff;
+        cursor: pointer;
+      }
+      h1 {
+        font-size: 300px;
+        color: red;
+        text-align: center;
+      }
+      h1.active {
+        animation: count 0.5s;
+      }
+      @keyframes count {
+        from {
+          transform: scale(0.1);
+          opacity: 1;
+        }
+        to {
+          transform: scale(3.5);
+          opacity: 0;
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="btn">倒计时</div>
+    <div class="box">
+      <h1 style="display: none">10</h1>
+    </div>
+  </body>
+  <script>
+    let NUMBER = 1;
+    let COUNT = 10;
+    let COLORS = ["#8c00ff", "#006bff", "#4fff00", "#ffb800", "#ff0000"];
+    let timer = null;
+    function $(str) {
+      return document.querySelector(str);
+    }
+    function actionNum() {
+      let h1 = $("h1");
+      $("h1").style.display = "block";
+      timer = setInterval(() => {
+        COUNT--;
+        NUMBER++;
+        if (COUNT >= 0) {
+          h1.classList.remove("active");
+          setTimeout(() => {
+            let num = Math.floor(Math.random() * 5);
+            h1.innerText = COUNT;
+            h1.style.color = COLORS[num];
+            h1.classList.add("active");
+          }, 100);
+        } else {
+          clearInterval(timer);
+        }
+      }, 1000);
+    }
+    $(".btn").onclick = function () {
+      if (COUNT < 0) {
+        COUNT = 11;
+      }
+      actionNum();
+    };
+  </script>
+</html>
